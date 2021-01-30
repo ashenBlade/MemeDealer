@@ -23,6 +23,17 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new Uri("Pages/AllMemesPage.xaml", UriKind.Relative));
+        }
+
+        private void AllMemesButton_Selected(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Uri("Pages/AllMemesPage.xaml", UriKind.Relative));
+        }
+
+        private void EditorButton_Selected(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Uri("Pages/EditorPage.xaml", UriKind.Relative));
         }
     }
 }

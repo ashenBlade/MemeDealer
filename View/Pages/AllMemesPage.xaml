@@ -1,0 +1,20 @@
+﻿<Page x:Class="View.AllMemesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="All memes">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight="60" MinHeight="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Meme searcher area" Grid.Row="0"></TextBlock>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Area for memes images"></TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>
