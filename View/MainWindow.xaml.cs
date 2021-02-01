@@ -24,5 +24,21 @@ namespace View
         {
             InitializeComponent();
         }
+
+
+        private void AllMemesButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Uri("Pages/AllMemesPage.xaml", UriKind.Relative));
+        }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MainFrame.Navigate(new Uri("Pages/AllMemesPage.xaml", UriKind.Relative));
+        }
+
+        private void EditorButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Uri("Pages/EditorPage.xaml", UriKind.Relative));
+        }
     }
 }
