@@ -24,15 +24,15 @@ namespace Tests
 
             db.Add(new Meme
             {
-                Name = "Бургеры",
-                Description = "Технари готовят бургеры",
-                Tags = "студенты бедность макдональдс работа",
+                Name = "Burgers",
+                Description = "Techies prepare burgers",
+                Tags = "students job burgers mcdonalds",
                 PathToFile = "memes/first.jpg"
             });
 
             db.SaveChanges();
 
-            Assert.IsTrue(File.Exists("Images/Бургеры.jpg"));
+            Assert.IsTrue(File.Exists("Images/Burgers.jpg"));
         }
     }
 }
