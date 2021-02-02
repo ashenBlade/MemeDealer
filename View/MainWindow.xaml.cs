@@ -36,7 +36,6 @@ namespace View
 
             // Contains all images
             Repo = new MemeRepo();
-            SetTestImages();
 
             // Initialize main pages
             AllMemesPage = new AllMemesPage(Repo, MainFrame);
@@ -47,16 +46,9 @@ namespace View
             // Start page
             CurrentPage = AllMemesPage;
             MainFrame.Navigate(CurrentPage);
+            this.Closing += ( sender, args ) => { /* TODO */ };
         }
 
-        private void SetTestImages()
-        {
-            Repo.Clear();
-            Repo.Add(new Meme() { PathToFile = "../Assets/hashtag.png", Name = "Hashtag", Tags = ""});
-            Repo.Add(new Meme() { PathToFile = "../Assets/close.png", Name = "Close button", Tags = ""});
-            Repo.Add(new Meme() { PathToFile = "../Assets/text.png", Name = "Text", Tags = ""});
-            Repo.Add(new Meme() { PathToFile = "../Assets/return.png", Name = "Return", Tags = "" });
-        }
 
         private void AllMemesButton_Click(object sender, RoutedEventArgs e)
         {

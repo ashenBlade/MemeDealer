@@ -63,18 +63,19 @@ namespace View.Pages
             }
 
             Meme.Name = Title.Text;
+            Meme.Tags = TagsBlock.Text;
+            Meme.PathToFile = ( MainImage.Source as BitmapImage).UriSource.AbsoluteUri;
             Repo.Add(Meme);
             MessageBox.Show("Мем успешно добавлен");
-            Meme = new Core.Image();
-            MainImage.UpdateLayout();
-
-            Title.Text = string.Empty;
-            ResetImage(MainImage);
+            ResetPage();
         }
 
-        private void ResetImage( Image image )
+        private void ResetPage()
         {
-            image.Source = new BitmapImage();
+            Title.Text = string.Empty;
+            TagsBlock.Text = string.Empty;
+            MainImage.Source = new BitmapImage();
+            Meme = new Meme();
         }
     }
 }

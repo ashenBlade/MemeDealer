@@ -46,7 +46,7 @@ namespace View.Pages
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var image = ((((sender as Border).Child as Grid).Children[0] as Border).Child as Image).DataContext as Core.Image;
-            SelectedMeme = image;
+            MainFrame.Navigate(new MemeInfoPage(image, MainFrame));
         }
     }
 }
