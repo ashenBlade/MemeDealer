@@ -1,45 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MemeRepo = Core.DatabaseTools;
+using Image = System.Windows.Controls.Image;
 using Meme = Core.Image;
-
-namespace View
+using MemeRepo = Core.DatabaseTools;
+namespace View.Pages
 {
     /// <summary>
     /// Interaction logic for AllMemesPage.xaml
     /// </summary>
     public partial class AllMemesPage : Page
     {
-        private ObservableCollection<Meme> Memes { get; set; }
-        private Meme SelectedMeme { get; set; }
+        public ObservableCollection<Meme> Memes { get; set; }
+        public Meme SelectedMeme { get; set; }
+        private MemeRepo Repo { get; set; }
+        private Frame MainFrame { get; set; }
 
-        public AllMemesPage()
+        public AllMemesPage(MemeRepo repo, Frame mainFrame)
         {
             InitializeComponent();
-            InitializeMemes();
+            // InitializeMemes();
+            Repo = repo;
+            Memes = new ObservableCollection<Meme>();
+            foreach (var meme in Repo.FindByTags(""))
+                Memes.Add(meme);
             AllMemesList.ItemsSource = Memes;
+            MainFrame = mainFrame;
         }
 
-        private void InitializeMemes()
+        public void ShowImagesWithTags( string tags )
         {
-            Memes = new ObservableCollection<Meme>();
-            Memes.Add(new Meme() { Name = "Meme 1", PathToFile = "../Assets/hashtag.png" });
-            Memes.Add(new Meme() { Name = "Meme 2", PathToFile = "../Assets/search.png" });
-            Memes.Add(new Meme() { Name = "Meme 3", PathToFile = "../Assets/menu.png" });
+            Memes.Clear();
+            foreach (var meme in Repo.FindByTags(tags))
+            {
+                Memes.Add(meme);
+            }
         }
+
 
         private void AllMemesList_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -48,7 +45,6 @@ namespace View
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var x = new Meme();
             var image = ((((sender as Border).Child as Grid).Children[0] as Border).Child as Image).DataContext as Core.Image;
             SelectedMeme = image;
         }

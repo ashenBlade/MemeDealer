@@ -1,4 +1,4 @@
-﻿<Page x:Class="View.AllMemesPage"
+﻿<Page x:Class="View.Pages.AllMemesPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,10 +14,13 @@
         <TextBlock Text="All memes"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Grid.Row="0" 
+                   Grid.Row="0"
                    FontSize="20"/>
-        <StackPanel Grid.Row="1">
-            <ItemsControl x:Name="AllMemesList" 
+        <Border Grid.Row="1"
+                BorderBrush="Green"
+                BorderThickness="0 1 0 0">
+        <StackPanel>
+            <ItemsControl x:Name="AllMemesList"
                           ItemsSource="{Binding Memes}"
                           MouseDown="AllMemesList_MouseDown">
                 <ItemsControl.ItemTemplate>
@@ -59,5 +62,6 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </StackPanel>
+            </Border>
     </Grid>
 </Page>
