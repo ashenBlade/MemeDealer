@@ -1,44 +1,38 @@
 using NUnit.Framework;
 using Core;
+using System.IO;
 
 namespace Tests
 {
     public class Core_Tests
     {
-        DatabaseTools dbt;
+        MemeRepository db;
 
         [SetUp]
         public void Setup()
         {
-            dbt = new DatabaseTools();
+            db = new MemeRepository();
         }
 
         [Test]
-        public void Add_Tests()
+        public void Add_Copy_Tests()
         {
-            dbt.Clear();
+            db.Clear();
 
-            dbt.Add(new Image
+            if (Directory.Exists("Images"))
+                Directory.Delete("Images", true);
+
+            db.Add(new Meme
             {
-                Name = "my cat",
-                Tags = "animals cats",
-            });
-            dbt.Add(new Image
-            {
-                Name = "my dog",
-                Tags = "animals dogs",
-            });
-            dbt.Add(new Image
-            {
-                Name = "the biggest cat",
-                Tags = "animals cats biggest",
+                Name = "Бургеры",
+                Description = "Технари готовят бургеры",
+                Tags = "студенты бедность макдональдс работа",
+                PathToFile = "memes/first.jpg"
             });
 
-            Assert.AreEqual(new[] { "my cat", "the biggest cat" }, dbt.FindByTags("cats").ConvertAll(x => x.Name).ToArray());
+            db.SaveChanges();
 
-            Assert.AreEqual(new[] { "my cat", "my dog", "the biggest cat" }, dbt.FindByTags("").ConvertAll(x => x.Name).ToArray());
-
-            Assert.AreEqual(new[] { "the biggest cat" }, dbt.FindByTags("biggest").ConvertAll(x => x.Name).ToArray());
+            Assert.IsTrue(File.Exists("Images/Бургеры.jpg"));
         }
     }
 }
