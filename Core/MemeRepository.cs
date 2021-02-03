@@ -7,31 +7,36 @@ namespace Core
 {
     public class MemeRepository
     {
-        readonly ApplicationContext db;
-
+        private List<Meme> Memes { get; set; }
         public MemeRepository()
         {
-            db = new ApplicationContext();
+            using var db = new ApplicationContext();
+            Memes = db.Memes.ToList();
         }
 
         public void SaveChanges()
         {
-            db.SaveChanges();
+            throw new NotImplementedException();
         }
 
         public void Clear()
         {
-            db.Memes.RemoveRange(db.Memes);
+            throw new NotImplementedException();
         }
 
         public void Remove(Meme meme)
         {
-            db.Memes.Remove(meme);
+            throw new NotImplementedException();
         }
 
-        public List<Meme> GetAll()
+        public List<Meme> GetAllMemes()
         {
-            return db.Memes.ToList();
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetAllTags()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace Core
 
             newMeme.PathToFile = newPathToFile;
 
-            db.Memes.Add(newMeme);
+            Memes.Add(newMeme);
         }
 
         /// <summary>
@@ -68,12 +73,12 @@ namespace Core
 
             if (requiredTags.Length == 0)
             {
-                return db.Memes.ToList();
+                return Memes;
             }
 
             List<Meme> result = new List<Meme>();
 
-            foreach (Meme meme in db.Memes.ToList())
+            foreach (Meme meme in Memes)
             {
                 string[] tags = meme.Tags.Split();
 
