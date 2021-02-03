@@ -1,6 +1,6 @@
 ﻿namespace Core
 {
-    public class Image
+    public class Meme
     {
         public int Id { get; set; }
         public string Name { get; set; }
