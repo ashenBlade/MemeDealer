@@ -4,7 +4,7 @@ namespace Core
 {
     internal class ApplicationContext : DbContext
     {
-        internal DbSet<Image> Images { get; set; }
+        internal DbSet<Meme> Memes { get; set; }
 
         internal ApplicationContext()
         {
@@ -13,7 +13,7 @@ namespace Core
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=Images.db;");
+            optionsBuilder.UseSqlite(@"Data Source=Memes.db;");
         }
     }
 }
