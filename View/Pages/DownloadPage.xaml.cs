@@ -6,18 +6,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Core;
 using Microsoft.Win32;
-using Image = System.Windows.Controls.Image;
-using MemeRepo = Core.DatabaseTools;
-using Meme = Core.Image;
+using Core;
+
 namespace View.Pages
 {
     public partial class DownloadPage : Page
     {
-        private MemeRepo Repo { get; set; }
+        private MemeRepository Repo { get; set; }
 
         private Meme Meme { get; set; }
 
-        public DownloadPage(MemeRepo repo)
+        public DownloadPage(MemeRepository repo)
         {
             InitializeComponent();
             Repo = repo;
@@ -50,7 +49,7 @@ namespace View.Pages
 
         private void SaveButton_MouseDown( object sender, MouseButtonEventArgs e )
         {
-            if (string.IsNullOrEmpty(Meme.PathToFile))
+            if (string.IsNullOrWhiteSpace(Meme.PathToFile))
             {
                 MessageBox.Show("Добавьте изображение");
                 return;
@@ -64,10 +63,10 @@ namespace View.Pages
 
             Meme.Name = Title.Text;
             Meme.Tags = TagsBlock.Text;
-            Meme.PathToFile = ( MainImage.Source as BitmapImage).UriSource.AbsoluteUri;
             Repo.Add(Meme);
-            MessageBox.Show("Мем успешно добавлен");
+            Repo.SaveChanges();
             ResetPage();
+            MessageBox.Show("Мем успешно добавлен");
         }
 
         private void ResetPage()

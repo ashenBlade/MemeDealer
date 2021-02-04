@@ -43,11 +43,24 @@
                    IsEnabled="True"
                    Style="{StaticResource MemeTitle}"
                    Text="{Binding Name}" />
-        <Image Grid.Row="1"
-               HorizontalAlignment="Right"
-               Margin="10"
-               Source="../Assets/return.png"
-               MouseDown="ReturnButton_MouseDown" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="70"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"
+                   Margin="10"
+                   Source="../Assets/editor.png"
+                   MouseDown="EditorButton_MouseDown"
+                   >
+                </Image>
+            <Image Grid.Column="2"
+                HorizontalAlignment="Right"
+                   Margin="10"
+                   Source="../Assets/return.png"
+                   MouseDown="ReturnButton_MouseDown" />
+        </Grid>
         <Border Grid.Row="2"
                 BorderBrush="DarkGreen"
                 BorderThickness="1">

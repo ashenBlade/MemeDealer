@@ -14,8 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Core;
 using View.Pages;
-using MemeRepo = Core.DatabaseTools;
-using Meme = Core.Image;
+
 
 namespace View
 {
@@ -24,7 +23,7 @@ namespace View
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MemeRepo Repo { get; set; }
+        private MemeRepository Repo { get; set; }
         private AllMemesPage AllMemesPage { get; set; }
         private EditorPage EditorPage { get; set; }
         private DownloadPage DownloadPage { get; set; }
@@ -35,12 +34,12 @@ namespace View
             InitializeComponent();
 
             // Contains all images
-            Repo = new MemeRepo();
+            Repo = new MemeRepository();
 
             // Initialize main pages
-            AllMemesPage = new AllMemesPage(Repo, MainFrame);
             EditorPage = new EditorPage(Repo);
             DownloadPage = new DownloadPage(Repo);
+            AllMemesPage = new AllMemesPage(Repo, MainFrame, EditorPage);
 
 
             // Start page

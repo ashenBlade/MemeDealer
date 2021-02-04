@@ -1,19 +1,22 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Meme = Core.Image;
+using Core;
 
 namespace View.Pages
 {
     public partial class MemeInfoPage : Page
     {
+        private MemeRepository Repo { get; set; }
+        private EditorPage EditorPage { get; set; }
         private Meme Meme { get; set; }
         private Frame MainFrame { get; set; }
-        public MemeInfoPage(Meme meme, Frame frame)
+        public MemeInfoPage(Meme meme, Frame frame, EditorPage editorPage)
         {
             InitializeComponent();
             Meme = meme;
-            DataContext = Meme;
             MainFrame = frame;
+            EditorPage = editorPage;
+            DataContext = Meme;
         }
 
         private void ReturnButton_MouseDown( object sender, MouseButtonEventArgs e )
@@ -21,9 +24,10 @@ namespace View.Pages
             MainFrame.GoBack();
         }
 
-        private void MemeTitle_MouseDown( object sender, MouseButtonEventArgs e )
+        private void EditorButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ( sender as TextBlock ).IsEnabled = true;
+            EditorPage.SetBackgroundImage(Meme);
+            MainFrame.Navigate(EditorPage);
         }
     }
 }

@@ -2,8 +2,8 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Image = System.Windows.Controls.Image;
-using Meme = Core.Image;
-using MemeRepo = Core.DatabaseTools;
+using Core;
+
 namespace View.Pages
 {
     /// <summary>
@@ -13,19 +13,21 @@ namespace View.Pages
     {
         public ObservableCollection<Meme> Memes { get; set; }
         public Meme SelectedMeme { get; set; }
-        private MemeRepo Repo { get; set; }
+        private EditorPage EditorPage { get; set; }
+        private MemeRepository Repo { get; set; }
         private Frame MainFrame { get; set; }
 
-        public AllMemesPage(MemeRepo repo, Frame mainFrame)
+        public AllMemesPage(MemeRepository repo, Frame mainFrame, EditorPage editorPage)
         {
             InitializeComponent();
             // InitializeMemes();
             Repo = repo;
             Memes = new ObservableCollection<Meme>();
-            foreach (var meme in Repo.FindByTags(""))
+            foreach (var meme in Repo.GetAllMemes())
                 Memes.Add(meme);
             AllMemesList.ItemsSource = Memes;
             MainFrame = mainFrame;
+            EditorPage = editorPage;
         }
 
         public void ShowImagesWithTags( string tags )
@@ -45,8 +47,8 @@ namespace View.Pages
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var image = ((((sender as Border).Child as Grid).Children[0] as Border).Child as Image).DataContext as Core.Image;
-            MainFrame.Navigate(new MemeInfoPage(image, MainFrame));
+            var image = ((((sender as Border).Child as Grid).Children[0] as Border).Child as Image).DataContext as Meme;
+            MainFrame.Navigate(new MemeInfoPage(image, MainFrame, EditorPage));
         }
     }
 }

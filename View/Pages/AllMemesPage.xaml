@@ -11,7 +11,7 @@
             <RowDefinition Height="100" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="All memes"
+        <TextBlock Text="Моя коллекция"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Grid.Row="0"

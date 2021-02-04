@@ -32,14 +32,14 @@
     </Window.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!--#region Navigation panel-->
-        <Grid Grid.Column="0" Background="#A3A3A3">
+        <Grid Grid.Column="0" Background="DarkGreen">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -75,7 +75,7 @@
             <Button x:Name="AllMemesButton"
                         Grid.Row="2"
                         Grid.Column="1"
-                        Content="All memes"
+                        Content="Моя коллекция"
                         FontSize="30"
                        Style="{StaticResource NavPanelButton}"
                     Click="AllMemesButton_Click"/>
@@ -90,7 +90,7 @@
                     Grid.Row="3"
                     Grid.Column="1"
                     Style="{StaticResource NavPanelButton}"
-                    Content="Editor"
+                    Content="Редактор"
                     FontSize="30"
                     Click="EditorButton_Click"/>
             <!--#endregion-->
@@ -104,7 +104,7 @@
                     Grid.Row="4"
                     Grid.Column="1"
                     Style="{StaticResource NavPanelButton}"
-                    Content="Download"
+                    Content="Загрузить"
                     FontSize="30"
                     Click="DownloadButton_OnClick"/>
             <!--#endregion-->

@@ -8,17 +8,23 @@ namespace Core
     public class MemeRepository
     {
         private List<Meme> Memes { get; set; }
+        private const string ImagesDirectoryName = "Images";
+        private string ImagesDirectoryPath { get; }
         public MemeRepository()
         {
             using var db = new ApplicationContext();
             Memes = db.Memes.ToList();
+            ImagesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), ImagesDirectoryName);
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            using var db = new ApplicationContext();
+            db.Memes.UpdateRange(Memes);
+            db.SaveChanges();
         }
 
+        // Why?
         public void Clear()
         {
             throw new NotImplementedException();
@@ -26,12 +32,12 @@ namespace Core
 
         public void Remove(Meme meme)
         {
-            throw new NotImplementedException();
+            Memes.Remove(meme);
         }
 
         public List<Meme> GetAllMemes()
         {
-            throw new NotImplementedException();
+            return Memes;
         }
 
         public List<string> GetAllTags()
@@ -42,23 +48,22 @@ namespace Core
         /// <summary>
         /// Adds a new meme to the database
         /// </summary>
-        /// <param name="newMeme">new meme</param>
-        public void Add(Meme newMeme)
+        /// <param name="meme">New meme</param>
+        public void Add(Meme meme)
         {
-            FileInfo oldFile = new FileInfo(newMeme.PathToFile);
-            string destDir = "Images";
+            MakeMemeBackup(meme);
+            Memes.Add(meme);
+            using var db = new ApplicationContext();
+            db.Memes.Add(meme);
+        }
 
-            if (!Directory.Exists(destDir))
-                Directory.CreateDirectory(destDir);
-
-            string newFileName = newMeme.Name + oldFile.Extension;
-            string newPathToFile = Path.Combine(destDir, newFileName);
-
-            oldFile.CopyTo(newPathToFile, true);
-
-            newMeme.PathToFile = newPathToFile;
-
-            Memes.Add(newMeme);
+        private void MakeMemeBackup(Meme meme)
+        {
+            var originalFile = new FileInfo(meme.PathToFile);
+            var newFilename = string.Concat(meme.Name, originalFile.Extension);
+            var newFilepath = Path.Combine(ImagesDirectoryPath, newFilename);
+            originalFile.CopyTo(newFilepath, true);
+            meme.PathToFile = newFilepath;
         }
 
         /// <summary>

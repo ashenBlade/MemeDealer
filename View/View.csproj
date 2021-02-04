@@ -50,6 +50,10 @@
       <Resource Include="Assets\text.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Assets\rotate.png" />
+      <Resource Include="Assets\rotate.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>
