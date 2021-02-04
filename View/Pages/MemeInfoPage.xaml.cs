@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Core;
 
@@ -10,12 +11,13 @@ namespace View.Pages
         private EditorPage EditorPage { get; set; }
         private Meme Meme { get; set; }
         private Frame MainFrame { get; set; }
-        public MemeInfoPage(Meme meme, Frame frame, EditorPage editorPage)
+        public MemeInfoPage(Meme meme, Frame frame, EditorPage editorPage, MemeRepository repo)
         {
             InitializeComponent();
             Meme = meme;
             MainFrame = frame;
             EditorPage = editorPage;
+            Repo = repo;
             DataContext = Meme;
         }
 
@@ -28,6 +30,15 @@ namespace View.Pages
         {
             EditorPage.SetBackgroundImage(Meme);
             MainFrame.Navigate(EditorPage);
+        }
+
+
+        private void SaveChangesButton_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Meme.Name = MemeNameTextBox.Text;
+            Meme.Tags = TagsTextBox.Text;
+            Repo.SaveChanges();
+            MessageBox.Show("Изменения сохранены");
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Core
     public class MemeRepository
     {
         private List<Meme> Memes { get; set; }
+
         private const string ImagesDirectoryName = "Images";
         private string ImagesDirectoryPath { get; }
         public MemeRepository()
