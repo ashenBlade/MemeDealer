@@ -20,7 +20,8 @@
             </Style.Setters>
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid Background="#00000000"
+          IsHitTestVisible="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="90"/>
             <ColumnDefinition />
@@ -31,6 +32,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition /> <RowDefinition /> <RowDefinition />
             </Grid.RowDefinitions>
+            <!--// Download image button //-->
             <Button Style="{StaticResource FunctionalButton}"
                     x:Name="DownloadButton"
                     Grid.Row="0"
@@ -38,25 +40,28 @@
                     MouseDown="DownloadButton_MouseDown">
                 <Image Source="../Assets/download.png" />
             </Button>
+            <!--// Add text button //-->
             <Button Style="{StaticResource FunctionalButton}"
                     x:Name="AddTextButton"
                     Grid.Row="1"
                     ToolTip="Добавить текст">
                 <Image Source="../Assets/text.png" />
             </Button>
+            <!--// Save image button //-->
             <Button Style="{StaticResource FunctionalButton}"
                     x:Name="SaveButton"
                     Grid.Row="2"
-                    ToolTip="Сохранить изображение">
+                    ToolTip="Сохранить изображение"
+                    MouseLeftButtonUp="SaveButton_OnMouseLeftButtonDown" >
                 <Image Source="../Assets/save.png" />
             </Button>
         </Grid>
         <Grid Grid.Column="1"
                    Background="White">
-            <Canvas x:Name="MainCanvas"
-                    MouseLeftButtonDown="MainCanvas_MouseLeftButtonDown"
+            <InkCanvas x:Name="MainCanvas"
+                    MouseLeftButtonDown="MainCanvas_OnMouseLeftButtonDown"
                     MouseRightButtonDown="MainCanvas_OnMouseRightButtonDown">
-            </Canvas>
+            </InkCanvas>
         </Grid>
     </Grid>
 </Page>
