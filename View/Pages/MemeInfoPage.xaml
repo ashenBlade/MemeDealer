@@ -68,7 +68,6 @@
                    ToolTip="Сохранить изменения"/>
             <!--// Return button //-->
             <Image Grid.Column="2"
-                   HorizontalAlignment="Right"
                    Margin="10"
                    Source="../Assets/return.png"
                    MouseDown="ReturnButton_MouseDown"

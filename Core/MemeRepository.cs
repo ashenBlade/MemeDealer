@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 
 namespace Core
 {
@@ -52,10 +53,17 @@ namespace Core
         /// <param name="meme">New meme</param>
         public void Add(Meme meme)
         {
+            CheckImagesDirectoryExists();
             MakeMemeBackup(meme);
             Memes.Add(meme);
             using var db = new ApplicationContext();
             db.Memes.Add(meme);
+        }
+
+        private void CheckImagesDirectoryExists()
+        {
+            if (!Directory.Exists(ImagesDirectoryName))
+                Directory.CreateDirectory(ImagesDirectoryName);
         }
 
         private void MakeMemeBackup(Meme meme)
