@@ -8,6 +8,7 @@ namespace Core
     public class MemeRepository
     {
         private List<Meme> Memes { get; set; }
+        private Dictionary<string, List<Meme>> MemesWithTags { get; set; }
 
         private const string ImagesDirectoryName = "Images";
         private string ImagesDirectoryPath { get; }
@@ -16,6 +17,21 @@ namespace Core
             using var db = new ApplicationContext();
             Memes = db.Memes.ToList();
             ImagesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), ImagesDirectoryName);
+            foreach (Meme meme in Memes)
+            {
+                UpdateDictionary(meme);
+            }
+        }
+
+        public void UpdateDictionary(Meme meme)
+        {
+            string[] tags = meme.Tags.Split();
+            foreach (string tag in tags)
+            {
+                if (!(MemesWithTags.ContainsKey(tag)))
+                    MemesWithTags.Add(tag, new List<Meme>());
+                MemesWithTags[tag].Add(meme);
+            }
         }
 
         public void SaveChanges()
@@ -43,7 +59,7 @@ namespace Core
 
         public List<string> GetAllTags()
         {
-            throw new NotImplementedException();
+            return MemesWithTags.Keys.ToList();
         }
 
         /// <summary>
@@ -56,6 +72,7 @@ namespace Core
             Memes.Add(meme);
             using var db = new ApplicationContext();
             db.Memes.Add(meme);
+            UpdateDictionary(meme);
         }
 
         private void MakeMemeBackup(Meme meme)
@@ -76,37 +93,21 @@ namespace Core
         public List<Meme> FindByTags(string tagsString)
         {
             string[] requiredTags = tagsString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
+            var result = new List<Meme>();
             if (requiredTags.Length == 0)
             {
                 return Memes;
             }
 
-            List<Meme> result = new List<Meme>();
-
-            foreach (Meme meme in Memes)
+            foreach (string tag in requiredTags)
             {
-                string[] tags = meme.Tags.Split();
-
-                foreach (string tag in tags)
+                if (MemesWithTags.ContainsKey(tag))
                 {
-                    bool found = false;
-                    foreach (string requiredTag in requiredTags)
-                    {
-                        if (tag == requiredTag)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                    {
-                        result.Add(meme);
-                        break;
-                    }
+                    foreach (Meme meme in MemesWithTags[tag])
+                        if (!(result.Contains(meme)))
+                            result.Add(meme);
                 }
             }
-
             return result;
         }
     }
