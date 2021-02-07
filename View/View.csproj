@@ -54,6 +54,10 @@
       <Resource Include="Assets\delete.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Assets\icon.png" />
+      <Resource Include="Assets\icon.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

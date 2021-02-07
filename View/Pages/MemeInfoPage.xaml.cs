@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Core;
 
 namespace View.Pages
@@ -53,7 +54,7 @@ namespace View.Pages
         private void DeleteImageFile(Meme meme)
         {
             var memeFileInfo = new FileInfo(meme.PathToFile);
-            if (memeFileInfo.Exists && MemeImage.CheckAccess())
+            if (memeFileInfo.Exists)
                 memeFileInfo.Delete();
         }
     }
