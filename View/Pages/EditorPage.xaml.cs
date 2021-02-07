@@ -6,8 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Core;
+using Microsoft.Win32;
 
 namespace View.Pages
 {
@@ -34,7 +36,10 @@ namespace View.Pages
         {
             Reset();
             Meme = meme;
-            MainCanvas.Background = new ImageBrush(new BitmapImage(new Uri(Meme.PathToFile)));
+            var background = new ImageBrush();
+            background.ImageSource = new BitmapImage(new Uri(Meme.PathToFile));
+            background.Stretch = Stretch.Uniform;
+            MainCanvas.Background = background;
         }
 
         private void Reset()
@@ -84,11 +89,12 @@ namespace View.Pages
                 MainCanvas.Children.Remove(text);
                 MainCanvas.UpdateLayout();
             };
-            text.DragEnter += (sender, args) =>
+            text.KeyDown += (sender, args) =>
             {
-                InkCanvas.SetTop(text, args.GetPosition(MainCanvas).Y);
-                InkCanvas.SetLeft(text, args.GetPosition(MainCanvas).X);
-                MainCanvas.UpdateLayout();
+                if (args.Key == Key.Enter)
+                {
+                    Keyboard.ClearFocus();
+                }
             };
         }
 
@@ -116,11 +122,42 @@ namespace View.Pages
             // var cropped = new CroppedBitmap(rtb, new Int32Rect(50, 50,
             // (int) MainCanvas.RenderSize.Width,
             // (int) MainCanvas.RenderSize.Height));
-            var encoder = new PngBitmapEncoder();
+            var pathToSave = GetPathToSave();
+            var encoder = GetEncoder(new FileInfo(pathToSave).Extension);
+            // Add image
             encoder.Frames.Add(BitmapFrame.Create(rtb));
-            using var fs = File.OpenWrite("logo.png");
-            encoder.Save(fs);
+            SaveImage(pathToSave, encoder);
             MessageBox.Show("Мем создан успешно!");
+        }
+
+        private BitmapEncoder GetEncoder(string extension)
+        {
+            return extension switch
+                   {
+                       ".png"  => new PngBitmapEncoder(),
+                       ".jpg"  => new JpegBitmapEncoder(),
+                       ".bmp"  => new BmpBitmapEncoder(),
+                       ".tiff" => new TiffBitmapEncoder(),
+                       _       => throw new ArgumentException($"{extension} is not valid extension")
+                   };
+        }
+
+        private void SaveImage(string path, BitmapEncoder encoder)
+        {
+            using var fs = File.OpenWrite(path);
+            encoder.Save(fs);
+        }
+
+        private string GetPathToSave()
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Png|*.png|Jpg|*.jpg|Jpeg|*.jpeg|Bmp|*.bmp|Tiff|.tiff";
+            saveFileDialog.Title = "Выберите файл для сохранения";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                return saveFileDialog.FileName;
+            }
+            return null;
         }
 
     }
