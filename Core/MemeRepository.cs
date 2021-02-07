@@ -19,9 +19,7 @@ namespace Core
             Memes = db.Memes.ToList();
             ImagesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), ImagesDirectoryName);
             foreach (Meme meme in Memes)
-            {
                 UpdateDictionary(meme);
-            }
         }
 
         public void UpdateDictionary(Meme meme)
