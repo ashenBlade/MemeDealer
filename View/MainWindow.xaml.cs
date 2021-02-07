@@ -45,7 +45,6 @@ namespace View
             // Start page
             CurrentPage = AllMemesPage;
             MainFrame.Navigate(CurrentPage);
-            this.Closing += ( sender, args ) => { /* TODO */ };
         }
 
 

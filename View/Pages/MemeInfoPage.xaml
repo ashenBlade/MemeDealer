@@ -32,7 +32,7 @@
         <Grid.RowDefinitions>
             <!--// Name //-->
             <RowDefinition Height="50" />
-            <!--// Return arrow //-->
+            <!--// Image managing  buttons //-->
             <RowDefinition Height="70" />
             <!--// Image //-->
             <RowDefinition Height="*" />
@@ -51,6 +51,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <!--// Editor button //-->
             <Image Grid.Column="0"
@@ -66,8 +67,15 @@
                    x:Name="SaveChangesButton"
                    MouseDown="SaveChangesButton_OnMouseDown"
                    ToolTip="Сохранить изменения"/>
-            <!--// Return button //-->
+            <!--// Delete image button //-->
             <Image Grid.Column="2"
+                   Margin="10"
+                   Source="../Assets/delete.png"
+                   x:Name="DeleteImageButton"
+                   MouseDown="DeleteImageButton_OnMouseDown"
+                   ToolTip="Удалить изображение" />
+            <!--// Return button //-->
+            <Image Grid.Column="3"
                    Margin="10"
                    Source="../Assets/return.png"
                    MouseDown="ReturnButton_MouseDown"
@@ -79,7 +87,8 @@
                 BorderThickness="1">
             <Image HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Source="{Binding PathToFile}" />
+                   x:Name="MemeImage"
+                   />
         </Border>
         <!--// Tags //-->
         <StackPanel Grid.Row="3"

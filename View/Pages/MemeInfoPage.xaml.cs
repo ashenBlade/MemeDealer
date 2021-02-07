@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Core;
 
 namespace View.Pages
@@ -39,6 +41,21 @@ namespace View.Pages
             Meme.Tags = TagsTextBox.Text;
             Repo.SaveChanges();
             MessageBox.Show("Изменения сохранены");
+        }
+
+        private void DeleteImageButton_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainFrame.GoBack();
+            Repo.Remove(Meme);
+            DeleteImageFile(Meme);
+            MessageBox.Show("Мем удален успешно");
+        }
+
+        private void DeleteImageFile(Meme meme)
+        {
+            var memeFileInfo = new FileInfo(meme.PathToFile);
+            if (memeFileInfo.Exists)
+                memeFileInfo.Delete();
         }
     }
 }
