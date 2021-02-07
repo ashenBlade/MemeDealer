@@ -16,8 +16,14 @@ namespace Core
         public MemeRepository()
         {
             using var db = new ApplicationContext();
+            // Download memes from database
             Memes = db.Memes.ToList();
+
+            // Get images folder full path
             ImagesDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), ImagesDirectoryName);
+
+            // Update tags dictionary
+            MemesWithTags = new Dictionary<string, List<Meme>>();
             foreach (Meme meme in Memes)
                 UpdateDictionary(meme);
         }
